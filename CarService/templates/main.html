@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% comment %} 
+1. title - заголовок страницы 
+2. header - шапка сайта 
+3. content - основное содержимое 
+4. footer - подвал сайта 
+{% endcomment %} 
+{% comment %} 
+Вставляем в header навигационное меню с якорными ссылками 
+{% endcomment %} 
+
+{% block header %}
+{% include 'menu.html' %}
+{% endblock %}
+
+
+{% block content %}
+<p>Привет</p>
+{% endblock %}
