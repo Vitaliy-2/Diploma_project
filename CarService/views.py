@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 from django.views.generic import (
     TemplateView,
-    # FormView,
+    FormView,
 )
-# from .forms import VisitModelForm
+from .forms import VisitModelForm
 
 
 
@@ -55,12 +55,23 @@ class ServicesView(TemplateView):
 
 
 # класс для отображения форм
-# class VisitFormView(FormView):
-#     template_name = "visit_form.html"
-#     form_class = VisitModelForm
-#     success_url = "/thanks/"
-#     context = get_menu_context()
+class VisitFormView(FormView):
+    template_name = "visit_form.html"
+    form_class = VisitModelForm
+    success_url = "/thanks/"
+    context = get_menu_context()
 
-#     def form_valid(self, form):
-#         form.save()
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+# Используется для статичных страниц, где данные особо не меняются
+class ThanksTemplateView(TemplateView):
+    template_name = "thanks.html"
+    
+    # Расширяем метод. Добавляем контекст ключ - меню.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(get_menu_context())
+        return context

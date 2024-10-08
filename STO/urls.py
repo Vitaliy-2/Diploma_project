@@ -6,7 +6,8 @@ from CarService.views import (
     MainView,
     AboutView,
     ServicesView,
-    # VisitFormView,
+    VisitFormView,
+    ThanksTemplateView,
 )
 
 
@@ -15,5 +16,6 @@ urlpatterns = [
     path('', MainView.as_view(), name='main'),
     path('about/', AboutView.as_view(), name='about'),
     path('services/', ServicesView.as_view(), name='services'),
-    # path('appointment/', VisitFormView.as_view(), name='appointment'),
+    path('appointment/', VisitFormView.as_view(), name='appointment'),
+    path('thanks/', ThanksTemplateView.as_view(), name='thanks'),
 ]
