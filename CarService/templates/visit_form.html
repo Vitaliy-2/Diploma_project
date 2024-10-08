@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block header %}
+{% include 'menu.html' %}
+{% endblock %} 
+
+{% block content %}
+
+<div class="container py-4">
+    <div class="row">
+        <section id="orderForm" class="col-12 mb-4">
+            <h2>Запись на стрижку</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">{{ form.as_p }}</div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </section>
+    </div>
+</div>
+
+{% block footer %}
+    <p></p>
+{% endblock footer %}
+
+{% endblock %}

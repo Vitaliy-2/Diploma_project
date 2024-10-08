@@ -2,7 +2,10 @@ from django.shortcuts import render
 
 from django.views.generic import (
     TemplateView,
+    # FormView,
 )
+# from .forms import VisitModelForm
+
 
 
 MENU = [
@@ -49,3 +52,15 @@ class ServicesView(TemplateView):
         context.update(get_menu_context())
         context.update({'page_alias': 'services'})
         return context
+
+
+# класс для отображения форм
+# class VisitFormView(FormView):
+#     template_name = "visit_form.html"
+#     form_class = VisitModelForm
+#     success_url = "/thanks/"
+#     context = get_menu_context()
+
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
