@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
 from django.views.generic import (
     TemplateView,
     FormView,
+    View,
 )
 from .forms import VisitModelForm
-
+from .models import Section
 
 
 MENU = [
@@ -13,7 +15,7 @@ MENU = [
         {'title': 'О сервисе', 'url': '/about/', 'alias': 'about'},
         {'title': 'Услуги', 'url': '/services/', 'alias': 'services'},
         {'title': 'Отзывы', 'url': '#reviews', 'alias': True},
-        {'title': 'Запись', 'url': '#orderForm', 'alias': True},
+        {'title': 'Запись', 'url': '/appointment/', 'alias': 'appointment'},
     ]
 
 
@@ -64,6 +66,13 @@ class VisitFormView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+    # Расширяем метод. Добавляем контекст ключ - меню.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(get_menu_context())
+        context.update({'page_alias': 'appointment'})
+        return context
 
 
 # Используется для статичных страниц, где данные особо не меняются
@@ -75,3 +84,13 @@ class ThanksTemplateView(TemplateView):
         context = super().get_context_data(**kwargs)
         context.update(get_menu_context())
         return context
+
+
+class ServicesBySectionView(View):
+    
+    def get(self, request, section_id):
+        services = Section.objects.get(id=section_id).services.all()
+        services_data = [
+            {"id": service.id, "name": service.name} for service in services
+        ]
+        return JsonResponse({"services": services_data})
