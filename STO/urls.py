@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 
+from django.conf.urls import include
+
 
 from CarService.views import (
     MainView,
@@ -15,6 +17,8 @@ from CarService.views import (
     VisitDeleteView,
     VisitListView,
 )
+
+from user import urls
 
 
 urlpatterns = [
@@ -38,4 +42,7 @@ urlpatterns = [
     path("visit/<int:pk>/delete/", VisitDeleteView.as_view(), name="visit-delete"),
     # ListView
     path("visits/", VisitListView.as_view(), name="visits"),
+
+    # Подключаем пользователей с префиксом user
+    path("user/", include(urls)),
 ]
