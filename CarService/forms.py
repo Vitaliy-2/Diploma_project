@@ -53,3 +53,13 @@ class VisitModelForm(forms.ModelForm):
     #         # Поднимаем исключение, которое попадет в контекст шаблона
     #         raise forms.ValidationError("Vin должен содержать 17 символом или быть пустым")
     #     return vin
+
+
+# Расширяем исходну форму для дополнительного поля status (для администрации)
+class VisitEditModelForm(VisitModelForm):
+    class Meta(VisitModelForm.Meta):
+        fields = VisitModelForm.Meta.fields + ["status"]
+        widgets = {
+            **VisitModelForm.Meta.widgets,
+            "status": forms.Select(attrs={"class": "form-control"}),
+        }
